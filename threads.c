@@ -1,0 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   threads.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/25 10:13:23 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/25 17:59:58 by syanak           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philosophers.h"
+
+int	should_stop_simulation(t_philo *philo)
+{
+	int	stop;
+
+	pthread_mutex_lock(&philo->data->death_mutex);
+	stop = philo->data->stop_simulation;
+	pthread_mutex_unlock(&philo->data->death_mutex);
+	return (stop);
+}
+
+void	*philosopher_routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		ft_usleep(1);
+	while (1)
+	{
+		if (should_stop_simulation(philo))
+			break ;
+		eat_action(philo);
+		if (should_stop_simulation(philo))
+			break ;
+		sleep_action(philo);
+		if (should_stop_simulation(philo))
+			break ;
+		think_action(philo);
+	}
+	return (NULL);
+}
+
+int	start_threads(t_philo *first)
+{
+	t_philo	*current;
+	int		i;
+
+	current = first;
+	i = 0;
+	while (i < first->data->num_philos)
+	{
+		if (pthread_create(&current->thread, NULL, philosopher_routine,
+				current))
+			return (0);
+		current = current->next;
+		i++;
+	}
+	return (1);
+}
+
+void	join_threads(t_philo *first)
+{
+	t_philo	*current;
+	int		i;
+
+	current = first;
+	i = 0;
+	while (i < first->data->num_philos)
+	{
+		pthread_join(current->thread, NULL);
+		current = current->next;
+		i++;
+	}
+}
+
+int	run_simulation(t_philo *first, t_data *data)
+{
+	pthread_t	monitor;
+
+	(void)data;
+	if (!start_threads(first))
+		return (0);
+	if (pthread_create(&monitor, NULL, monitor_routine, first))
+		return (0);
+	pthread_join(monitor, NULL);
+	join_threads(first);
+	return (1);
+}

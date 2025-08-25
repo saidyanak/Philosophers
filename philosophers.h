@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phliosophers.h                                     :+:      :+:    :+:   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 10:13:47 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 13:56:39 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/25 17:58:57 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,46 @@ typedef struct s_philo
 	t_data			*data;
 }					t_philo;
 
-// Fonksiyon prototipleri
 long long			get_time(void);
+
+void				ft_usleep(long long time);
+void				*monitor_routine(void *arg);
+void				assign_all_forks(t_philo *first, t_data *data);
+void				get_forks_order(t_philo *philo, pthread_mutex_t **first,
+						pthread_mutex_t **second);
+void				eat_action(t_philo *philo);
+void				sleep_action(t_philo *philo);
+void				think_action(t_philo *philo);
+void				join_threads(t_philo *first);
+void				*philosopher_routine(void *arg);
+void				join_threads(t_philo *first);
 void				ft_usleep(long long time);
 void				print_status(t_philo *philo, char *status);
+void				assign_fork(t_philo *philo, t_data *data);
+void				assign_all_forks(t_philo *first, t_data *data);
+void				*philosopher_routine(void *arg);
+void				destroy_mutexes(t_data *data);
+void				free_philosophers(t_philo *first, int count);
+void				cleanup_all(t_philo *first, t_data *data);
+void				print_status(t_philo *philo, char *status);
+
+t_philo				*create_philo(int id, t_data *data);
+t_philo				*init_philosophers(t_data *data);
+
+int					should_stop_simulation(t_philo *philo);
+int					start_threads(t_philo *first);
+int					run_simulation(t_philo *first, t_data *data);
+int					ft_atoi(const char *str);
 int					check_philosopher_death(t_philo *philo);
 int					check_all_ate_enough(t_philo *first);
-void				*philosopher_routine(void *arg);
+int					handle_single_philosopher(t_philo *philo,
+						pthread_mutex_t *first_fork);
+int					init_forks(t_data *data);
+int					check_args(int argc, char **argv);
+int					check_philosopher_death(t_philo *philo);
+int					check_all_ate_enough(t_philo *first);
 int					start_threads(t_philo *first);
-void				join_threads(t_philo *first);
+
+t_data				*init_data(int argc, char **argv);
 
 #endif
