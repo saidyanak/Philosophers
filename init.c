@@ -29,11 +29,13 @@ t_data	*init_data(int argc, char **argv)
 		data->must_eat_count = -1;
 	data->stop_simulation = 0;
 	data->all_ate_enough = 0;
+	data->start_flag = 0;
 	data->start_time = get_time();
 	data->end_time = 0;
 	pthread_mutex_init(&data->print_mutex, NULL);
 	pthread_mutex_init(&data->death_mutex, NULL);
 	pthread_mutex_init(&data->meal_mutex, NULL);
+	pthread_mutex_init(&data->start_mutex, NULL);
 	return (data);
 }
 

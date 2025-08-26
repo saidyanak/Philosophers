@@ -27,8 +27,23 @@ void	*philosopher_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	
+	pthread_mutex_lock(&philo->data->start_mutex);
+	while (!philo->data->start_flag)
+	{
+		pthread_mutex_unlock(&philo->data->start_mutex);
+		usleep(100);
+		pthread_mutex_lock(&philo->data->start_mutex);
+	}
+	pthread_mutex_unlock(&philo->data->start_mutex);
+	
+	pthread_mutex_lock(&philo->data->meal_mutex);
+	philo->last_meal_time = get_time();
+	pthread_mutex_unlock(&philo->data->meal_mutex);
+	
 	if (philo->id % 2 == 0)
-		ft_usleep(1);
+		ft_usleep(philo->data->time_to_eat);
+	
 	while (1)
 	{
 		if (should_stop_simulation(philo))
@@ -42,6 +57,23 @@ void	*philosopher_routine(void *arg)
 		think_action(philo);
 	}
 	return (NULL);
+}
+
+int	run_simulation(t_philo *first)
+{
+	pthread_t	monitor;
+
+	if (!start_threads(first))
+		return (0);
+	
+	if (pthread_create(&monitor, NULL, monitor_routine, first))
+		return (0);	
+	pthread_mutex_lock(&first->data->start_mutex);
+	first->data->start_flag = 1;
+	pthread_mutex_unlock(&first->data->start_mutex);
+	pthread_join(monitor, NULL);
+	join_threads(first);
+	return (1);
 }
 
 int	start_threads(t_philo *first)
@@ -75,18 +107,4 @@ void	join_threads(t_philo *first)
 		current = current->next;
 		i++;
 	}
-}
-
-int	run_simulation(t_philo *first, t_data *data)
-{
-	pthread_t	monitor;
-
-	(void)data;
-	if (!start_threads(first))
-		return (0);
-	if (pthread_create(&monitor, NULL, monitor_routine, first))
-		return (0);
-	pthread_join(monitor, NULL);
-	join_threads(first);
-	return (1);
 }

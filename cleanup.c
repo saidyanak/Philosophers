@@ -19,6 +19,7 @@ void	destroy_mutexes(t_data *data)
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->death_mutex);
 	pthread_mutex_destroy(&data->meal_mutex);
+	pthread_mutex_destroy(&data->start_mutex);
 	if (data->forks)
 	{
 		i = 0;

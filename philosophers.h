@@ -27,11 +27,13 @@ typedef struct s_data
 	int				must_eat_count;
 	int				stop_simulation;
 	int				all_ate_enough;
+	int				start_flag;
 	long long		start_time;
 	long long		end_time;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	meal_mutex;
+	pthread_mutex_t	start_mutex;
 	pthread_mutex_t	*forks;
 }					t_data;
 
@@ -59,12 +61,7 @@ void				eat_action(t_philo *philo);
 void				sleep_action(t_philo *philo);
 void				think_action(t_philo *philo);
 void				join_threads(t_philo *first);
-void				*philosopher_routine(void *arg);
-void				join_threads(t_philo *first);
-void				ft_usleep(long long time);
-void				print_status(t_philo *philo, char *status);
 void				assign_fork(t_philo *philo, t_data *data);
-void				assign_all_forks(t_philo *first, t_data *data);
 void				*philosopher_routine(void *arg);
 void				destroy_mutexes(t_data *data);
 void				free_philosophers(t_philo *first, int count);
@@ -75,11 +72,8 @@ t_philo				*create_philo(int id, t_data *data);
 t_philo				*init_philosophers(t_data *data);
 
 int					should_stop_simulation(t_philo *philo);
-int					start_threads(t_philo *first);
-int					run_simulation(t_philo *first, t_data *data);
+int					run_simulation(t_philo *first);
 int					ft_atoi(const char *str);
-int					check_philosopher_death(t_philo *philo);
-int					check_all_ate_enough(t_philo *first);
 int					handle_single_philosopher(t_philo *philo,
 						pthread_mutex_t *first_fork);
 int					init_forks(t_data *data);

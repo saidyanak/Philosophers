@@ -12,21 +12,6 @@
 
 #include "philosophers.h"
 
-void	get_forks_order(t_philo *philo, pthread_mutex_t **first,
-		pthread_mutex_t **second)
-{
-	if (philo->left_fork < philo->right_fork)
-	{
-		*first = philo->left_fork;
-		*second = philo->right_fork;
-	}
-	else
-	{
-		*first = philo->right_fork;
-		*second = philo->left_fork;
-	}
-}
-
 int	handle_single_philosopher(t_philo *philo, pthread_mutex_t *first_fork)
 {
 	if (philo->data->num_philos == 1)
@@ -53,7 +38,17 @@ void	eat_action(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	get_forks_order(philo, &first_fork, &second_fork);
+	if (philo->id % 2 == 0)
+	{
+		first_fork = philo->left_fork;
+		second_fork = philo->right_fork;
+	}
+	else
+	{
+		first_fork = philo->right_fork;
+		second_fork = philo->left_fork;
+	}
+
 	pthread_mutex_lock(first_fork);
 	print_status(philo, "has taken a fork");
 	if (handle_single_philosopher(philo, first_fork))

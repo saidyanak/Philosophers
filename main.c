@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	assign_all_forks(philosophers, data);
-	run_simulation(philosophers, data);
+	run_simulation(philosophers);
 	cleanup_all(philosophers, data);
 	return (0);
 }

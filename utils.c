@@ -57,10 +57,7 @@ void	ft_usleep(long long time)
 		current = get_time();
 		if (current - start >= time)
 			break ;
-		if (time - (current - start) > 2)
-			usleep(50);
-		else if (time - (current - start) > 0)
-			usleep(1);
+		usleep(100);
 	}
 }
 
