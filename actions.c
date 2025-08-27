@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:40:51 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 13:03:56 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/27 17:17:20 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,27 @@ int	handle_single_philosopher(t_philo *philo, pthread_mutex_t *first_fork)
 	return (0);
 }
 
+void	add_fork(pthread_mutex_t **first_fork, pthread_mutex_t **second_fork,
+		t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		*first_fork = philo->left_fork;
+		*second_fork = philo->right_fork;
+	}
+	else
+	{
+		*first_fork = philo->right_fork;
+		*second_fork = philo->left_fork;
+	}
+}
+
 void	eat_action(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	first_fork = philo->left_fork;
-	second_fork = philo->right_fork;
+	add_fork(&first_fork, &second_fork, philo);
 	pthread_mutex_lock(first_fork);
 	print_status(philo, "has taken a fork");
 	if (handle_single_philosopher(philo, first_fork))
@@ -65,4 +79,6 @@ void	sleep_action(t_philo *philo)
 void	think_action(t_philo *philo)
 {
 	print_status(philo, "is thinking");
+	if (philo->id % 2 == 1)
+		ft_usleep(1);
 }

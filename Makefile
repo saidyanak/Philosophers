@@ -13,7 +13,7 @@
 NAME = philo
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=thread
 CFLAGS_DEBUG = -Wall -Wextra -Werror -pthread -g -fsanitize=thread -O0
 
 SRCS = main.c \
