@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:13:23 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 18:00:03 by syanak           ###   ########.fr       */
+/*   Created: 2025/08/27 13:24:19 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/27 13:24:20 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_all_ate_enough(t_philo *first)
 	while (i < first->data->num_philos)
 	{
 		pthread_mutex_lock(&first->data->meal_mutex);
-		if (current->meals_eaten < first->data->must_eat_count)
+		if (!(current->meals_eaten == first->data->must_eat_count))
 			ate_enough = 0;
 		pthread_mutex_unlock(&first->data->meal_mutex);
 		if (!ate_enough)

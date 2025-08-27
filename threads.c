@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:41:20 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 12:41:20 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/27 12:47:20 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int	run_simulation(t_philo *first)
 {
 	pthread_t	monitor;
 
-	if (pthread_create(&monitor, NULL, monitor_routine, first))
-		return (0);
 	if (!start_threads(first))
+		return (0);
+	if (pthread_create(&monitor, NULL, monitor_routine, first))
 		return (0);
 	pthread_mutex_lock(&first->data->start_mutex);
 	first->data->start_flag = 1;

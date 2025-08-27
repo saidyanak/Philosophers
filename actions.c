@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:40:51 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 12:40:51 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/27 13:03:56 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,8 @@ void	eat_action(t_philo *philo)
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	if (philo->id % 2 == 0)
-	{
-		first_fork = philo->left_fork;
-		second_fork = philo->right_fork;
-	}
-	else
-	{
-		first_fork = philo->right_fork;
-		second_fork = philo->left_fork;
-	}
+	first_fork = philo->left_fork;
+	second_fork = philo->right_fork;
 	pthread_mutex_lock(first_fork);
 	print_status(philo, "has taken a fork");
 	if (handle_single_philosopher(philo, first_fork))
