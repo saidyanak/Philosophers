@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:13:23 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 17:59:58 by syanak           ###   ########.fr       */
+/*   Created: 2025/08/27 12:41:20 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/27 12:41:20 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	*philosopher_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	
 	pthread_mutex_lock(&philo->data->start_mutex);
 	while (!philo->data->start_flag)
 	{
@@ -36,14 +35,11 @@ void	*philosopher_routine(void *arg)
 		pthread_mutex_lock(&philo->data->start_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->start_mutex);
-	
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = get_time();
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->data->time_to_eat);
-	
 	while (1)
 	{
 		if (should_stop_simulation(philo))
@@ -63,11 +59,10 @@ int	run_simulation(t_philo *first)
 {
 	pthread_t	monitor;
 
+	if (pthread_create(&monitor, NULL, monitor_routine, first))
+		return (0);
 	if (!start_threads(first))
 		return (0);
-	
-	if (pthread_create(&monitor, NULL, monitor_routine, first))
-		return (0);	
 	pthread_mutex_lock(&first->data->start_mutex);
 	first->data->start_flag = 1;
 	pthread_mutex_unlock(&first->data->start_mutex);

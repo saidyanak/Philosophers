@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:13:23 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 18:00:18 by syanak           ###   ########.fr       */
+/*   Created: 2025/08/27 12:40:51 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/27 12:40:51 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	eat_action(t_philo *philo)
 		first_fork = philo->right_fork;
 		second_fork = philo->left_fork;
 	}
-
 	pthread_mutex_lock(first_fork);
 	print_status(philo, "has taken a fork");
 	if (handle_single_philosopher(philo, first_fork))
