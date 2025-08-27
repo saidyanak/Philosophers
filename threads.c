@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:41:20 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 13:49:59 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/27 13:53:10 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,7 @@ void	*philosopher_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_lock(&philo->data->start_mutex);
-	while (!philo->data->start_flag)
-	{
-		pthread_mutex_unlock(&philo->data->start_mutex);
-		usleep(10);
-		pthread_mutex_lock(&philo->data->start_mutex);
-	}
-	pthread_mutex_unlock(&philo->data->start_mutex);
+	wait_for_all(philo);
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = get_time();
 	pthread_mutex_unlock(&philo->data->meal_mutex);

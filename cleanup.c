@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:13:23 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 18:00:14 by syanak           ###   ########.fr       */
+/*   Created: 2025/08/27 13:54:44 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/27 13:54:45 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,16 @@ void	assign_all_forks(t_philo *first, t_data *data)
 		current = current->next;
 		i++;
 	}
+}
+
+void	wait_for_all(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->start_mutex);
+	while (!philo->data->start_flag)
+	{
+		pthread_mutex_unlock(&philo->data->start_mutex);
+		usleep(10);
+		pthread_mutex_lock(&philo->data->start_mutex);
+	}
+	pthread_mutex_unlock(&philo->data->start_mutex);
 }

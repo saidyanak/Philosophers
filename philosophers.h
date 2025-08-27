@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 10:13:47 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/25 17:58:57 by syanak           ###   ########.fr       */
+/*   Created: 2025/08/27 13:54:08 by syanak            #+#    #+#             */
+/*   Updated: 2025/08/27 13:54:17 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void				print_status(t_philo *philo, char *status);
 
 t_philo				*create_philo(int id, t_data *data);
 t_philo				*init_philosophers(t_data *data);
-
+void				wait_for_all(t_philo *philo);
 int					should_stop_simulation(t_philo *philo);
 int					run_simulation(t_philo *first);
 int					ft_atoi(const char *str);
