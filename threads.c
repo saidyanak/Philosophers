@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:41:20 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 12:47:20 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/27 13:49:59 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*philosopher_routine(void *arg)
 	while (!philo->data->start_flag)
 	{
 		pthread_mutex_unlock(&philo->data->start_mutex);
-		usleep(100);
+		usleep(10);
 		pthread_mutex_lock(&philo->data->start_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->start_mutex);
