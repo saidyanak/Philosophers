@@ -12,23 +12,23 @@
 
 #include "philosophers.h"
 
-void	destroy_mutexes(t_data *data)
+void	destroy_mutexes(t_data *data, t_philo *first)
 {
 	int	i;
+	t_philo *current;
 
+	current = first;
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->death_mutex);
 	pthread_mutex_destroy(&data->meal_mutex);
 	pthread_mutex_destroy(&data->start_mutex);
-	if (data->forks)
+	i = 0;
+	while (i < data->num_philos)
 	{
-		i = 0;
-		while (i < data->num_philos)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			i++;
-		}
-		free(data->forks);
+		if (current->right_fork)
+			pthread_mutex_destroy(current->right_fork);
+		current = current->next;
+		i++;
 	}
 }
 
@@ -38,13 +38,13 @@ void	free_philosophers(t_philo *first, int count)
 	t_philo	*next;
 	int		i;
 
-	if (!first)
-		return ;
 	current = first;
 	i = 0;
 	while (i < count)
 	{
 		next = current->next;
+		free(current->left_fork);
+		free(current->right_fork);
 		free(current);
 		current = next;
 		i++;
@@ -53,28 +53,16 @@ void	free_philosophers(t_philo *first, int count)
 
 void	cleanup_all(t_philo *first, t_data *data)
 {
-	if (first)
-		free_philosophers(first, data->num_philos);
+	int	num_philo;
+	
+	num_philo = data->num_philos;
 	if (data)
 	{
-		destroy_mutexes(data);
+		destroy_mutexes(data, first);
 		free(data);
 	}
-}
-
-void	assign_all_forks(t_philo *first, t_data *data)
-{
-	int		i;
-	t_philo	*current;
-
-	i = 0;
-	current = first;
-	while (i < data->num_philos)
-	{
-		assign_fork(current, data);
-		current = current->next;
-		i++;
-	}
+	if (first)
+		free_philosophers(first, num_philo);
 }
 
 void	wait_for_all(t_philo *philo)
