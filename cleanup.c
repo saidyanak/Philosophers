@@ -43,7 +43,6 @@ void	free_philosophers(t_philo *first, int count)
 	while (i < count)
 	{
 		next = current->next;
-		free(current->left_fork);
 		free(current->right_fork);
 		free(current);
 		current = next;
@@ -71,7 +70,7 @@ void	wait_for_all(t_philo *philo)
 	while (!philo->data->start_flag)
 	{
 		pthread_mutex_unlock(&philo->data->start_mutex);
-		usleep(10);
+		ft_usleep(10);
 		pthread_mutex_lock(&philo->data->start_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->start_mutex);
