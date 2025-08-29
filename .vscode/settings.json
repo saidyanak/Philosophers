@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "pthread.h": "c",
-        "phliosophers.h": "c",
-        "philosophers.h": "c"
-    }
-}

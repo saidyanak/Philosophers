@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:40:51 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 17:17:20 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 12:53:04 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	sleep_action(t_philo *philo)
 void	think_action(t_philo *philo)
 {
 	print_status(philo, "is thinking");
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 1 && philo->data->num_philos % 2 != 0)
 		ft_usleep(1);
 }
