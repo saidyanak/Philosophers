@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:08 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:08:10 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:10:51 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void				sleep_action(t_philo *philo);
 void				think_action(t_philo *philo);
 void				join_threads(t_philo *first);
 void				*philosopher_routine(void *arg);
-void	destroy_mutexes(t_data *data, t_philo *first);
+void				destroy_mutexes(t_data *data, t_philo *first);
 void				free_philosophers(t_philo *first, int count);
 void				cleanup_all(t_philo *first, t_data *data);
 void				print_status(t_philo *philo, char *status);

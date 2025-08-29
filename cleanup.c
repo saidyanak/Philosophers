@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:44 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:07:45 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:10:47 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	destroy_mutexes(t_data *data, t_philo *first)
 {
-	int	i;
-	t_philo *current;
+	int		i;
+	t_philo	*current;
 
 	current = first;
 	pthread_mutex_destroy(&data->print_mutex);
@@ -53,7 +53,7 @@ void	free_philosophers(t_philo *first, int count)
 void	cleanup_all(t_philo *first, t_data *data)
 {
 	int	num_philo;
-	
+
 	num_philo = data->num_philos;
 	if (data)
 	{
