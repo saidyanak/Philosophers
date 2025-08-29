@@ -6,11 +6,13 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:24:19 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:39:56 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 17:45:03 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int	check_philosopher_death(t_philo *philo)
 {
@@ -102,7 +104,7 @@ void	*monitor_routine(void *arg)
 			return (NULL);
 		if (handle_simulation_end(first) && first->data->must_eat_count != -1)
 			return (NULL);
-		usleep(10);
+		usleep(5);
 	}
 	return (NULL);
 }

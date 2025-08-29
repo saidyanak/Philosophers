@@ -6,17 +6,17 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:08 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:10:51 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 17:43:13 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 # include <pthread.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
+// # include <stdio.h>
+// # include <stdlib.h>
+// # include <sys/time.h>
+// # include <unistd.h>
 
 typedef struct s_data
 {

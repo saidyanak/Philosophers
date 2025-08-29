@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdlib.h>
 
 t_data	*init_data(int argc, char **argv)
 {

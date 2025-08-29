@@ -6,11 +6,13 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:44 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:31:25 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 17:44:44 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 void	destroy_mutexes(t_data *data, t_philo *first)
 {

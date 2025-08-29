@@ -6,11 +6,12 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 12:40:51 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:07:24 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 17:45:18 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <unistd.h>
 
 int	handle_single_philosopher(t_philo *philo, pthread_mutex_t *first_fork)
 {
