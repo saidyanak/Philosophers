@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:44 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:10:47 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:31:25 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	wait_for_all(t_philo *philo)
 	while (!philo->data->start_flag)
 	{
 		pthread_mutex_unlock(&philo->data->start_mutex);
-		usleep(10);
+		usleep(1);
 		pthread_mutex_lock(&philo->data->start_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->start_mutex);

@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:24:19 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 13:08:01 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:39:56 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void	*monitor_routine(void *arg)
 	{
 		if (check_all_philosophers(first))
 			return (NULL);
-		if (handle_simulation_end(first))
+		if (handle_simulation_end(first) && first->data->must_eat_count != -1)
 			return (NULL);
-		usleep(100);
+		usleep(10);
 	}
 	return (NULL);
 }
