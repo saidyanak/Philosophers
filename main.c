@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	data = init_data(argc, argv);
-	if (!data || !init_forks(data))
+	if (!data)
 		return (1);
 	philosophers = init_philosophers(data);
 	if (!philosophers)
@@ -39,7 +39,6 @@ int	main(int argc, char **argv)
 		cleanup_all(NULL, data);
 		return (1);
 	}
-	assign_all_forks(philosophers, data);
 	run_simulation(philosophers);
 	cleanup_all(philosophers, data);
 	return (0);

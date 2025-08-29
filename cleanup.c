@@ -6,29 +6,29 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:44 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/29 12:55:44 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:07:45 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	destroy_mutexes(t_data *data)
+void	destroy_mutexes(t_data *data, t_philo *first)
 {
 	int	i;
+	t_philo *current;
 
+	current = first;
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->death_mutex);
 	pthread_mutex_destroy(&data->meal_mutex);
 	pthread_mutex_destroy(&data->start_mutex);
-	if (data->forks)
+	i = 0;
+	while (i < data->num_philos)
 	{
-		i = 0;
-		while (i < data->num_philos)
-		{
-			pthread_mutex_destroy(&data->forks[i]);
-			i++;
-		}
-		free(data->forks);
+		if (current->right_fork)
+			pthread_mutex_destroy(current->right_fork);
+		current = current->next;
+		i++;
 	}
 }
 
@@ -38,13 +38,12 @@ void	free_philosophers(t_philo *first, int count)
 	t_philo	*next;
 	int		i;
 
-	if (!first)
-		return ;
 	current = first;
 	i = 0;
 	while (i < count)
 	{
 		next = current->next;
+		free(current->right_fork);
 		free(current);
 		current = next;
 		i++;
@@ -53,28 +52,16 @@ void	free_philosophers(t_philo *first, int count)
 
 void	cleanup_all(t_philo *first, t_data *data)
 {
-	if (first)
-		free_philosophers(first, data->num_philos);
+	int	num_philo;
+	
+	num_philo = data->num_philos;
 	if (data)
 	{
-		destroy_mutexes(data);
+		destroy_mutexes(data, first);
 		free(data);
 	}
-}
-
-void	assign_all_forks(t_philo *first, t_data *data)
-{
-	int		i;
-	t_philo	*current;
-
-	i = 0;
-	current = first;
-	while (i < data->num_philos)
-	{
-		assign_fork(current, data);
-		current = current->next;
-		i++;
-	}
+	if (first)
+		free_philosophers(first, num_philo);
 }
 
 void	wait_for_all(t_philo *philo)
@@ -83,7 +70,7 @@ void	wait_for_all(t_philo *philo)
 	while (!philo->data->start_flag)
 	{
 		pthread_mutex_unlock(&philo->data->start_mutex);
-		usleep(100);
+		usleep(10);
 		pthread_mutex_lock(&philo->data->start_mutex);
 	}
 	pthread_mutex_unlock(&philo->data->start_mutex);

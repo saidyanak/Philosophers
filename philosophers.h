@@ -6,7 +6,7 @@
 /*   By: syanak <syanak@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 13:54:08 by syanak            #+#    #+#             */
-/*   Updated: 2025/08/27 17:20:39 by syanak           ###   ########.fr       */
+/*   Updated: 2025/08/29 13:08:10 by syanak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ void				eat_action(t_philo *philo);
 void				sleep_action(t_philo *philo);
 void				think_action(t_philo *philo);
 void				join_threads(t_philo *first);
-void				assign_fork(t_philo *philo, t_data *data);
 void				*philosopher_routine(void *arg);
-void				destroy_mutexes(t_data *data);
+void	destroy_mutexes(t_data *data, t_philo *first);
 void				free_philosophers(t_philo *first, int count);
 void				cleanup_all(t_philo *first, t_data *data);
 void				print_status(t_philo *philo, char *status);
@@ -76,7 +75,6 @@ int					run_simulation(t_philo *first);
 int					ft_atoi(const char *str);
 int					handle_single_philosopher(t_philo *philo,
 						pthread_mutex_t *first_fork);
-int					init_forks(t_data *data);
 int					check_args(int argc, char **argv);
 int					check_philosopher_death(t_philo *philo);
 int					check_all_ate_enough(t_philo *first);

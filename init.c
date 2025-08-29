@@ -39,19 +39,6 @@ t_data	*init_data(int argc, char **argv)
 	return (data);
 }
 
-int	init_forks(t_data *data)
-{
-	int	i;
-
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
-	if (!data->forks)
-		return (0);
-	i = 0;
-	while (i < data->num_philos)
-		pthread_mutex_init(&data->forks[i++], NULL);
-	return (1);
-}
-
 t_philo	*create_philo(int id, t_data *data)
 {
 	t_philo	*new;
@@ -64,8 +51,27 @@ t_philo	*create_philo(int id, t_data *data)
 	new->last_meal_time = data->start_time;
 	new->next = NULL;
 	new->prev = NULL;
+	new->right_fork = malloc(sizeof(pthread_mutex_t) * 1);
+	if (!new->right_fork)
+		return (NULL);
+	pthread_mutex_init(new->right_fork, NULL);
 	new->data = data;
 	return (new);
+}
+
+void	set_left_forks(t_philo *head)
+{
+	t_philo	*current;
+	int		i;
+
+	i = 0;
+	current = head;
+	while (i < head->data->num_philos)
+	{
+		current->left_fork = current->prev->right_fork;
+		current = current->next;
+		i++;
+	}
 }
 
 t_philo	*init_philosophers(t_data *data)
@@ -92,14 +98,6 @@ t_philo	*init_philosophers(t_data *data)
 	}
 	current->next = head;
 	head->prev = current;
+	set_left_forks(head);
 	return (head);
-}
-
-void	assign_fork(t_philo *philo, t_data *data)
-{
-	philo->left_fork = &data->forks[philo->id - 1];
-	if (philo->id == data->num_philos)
-		philo->right_fork = &data->forks[0];
-	else
-		philo->right_fork = &data->forks[philo->id];
 }
